@@ -1,0 +1,23 @@
+# Maxfiy ma'lumotlar (parol, API kalit, token)
+.env
+.env.*
+*.pem
+*.key
+
+# Claude Code'ning lokal sozlamalari (faqat shu kompyuter uchun)
+.claude/
+
+# Tizim fayllari
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Muharrir sozlamalari
+.vscode/
+.idea/
+
+# Vaqtinchalik va keraksiz fayllar
+node_modules/
+*.log
+*.tmp
+*.bak
