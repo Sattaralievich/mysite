@@ -389,7 +389,6 @@ img { display: block; max-width: 100%; }
   padding: 32px 28px;
   transition: transform .2s ease, box-shadow .2s ease;
 }
-.service:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .service-icon {
   width: 52px; height: 52px; border-radius: 16px;
   background: var(--accent-soft); color: var(--accent);
@@ -409,7 +408,6 @@ img { display: block; max-width: 100%; }
   display: flex; flex-direction: column;
   transition: transform .2s ease, box-shadow .2s ease;
 }
-.project:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 
 /* Rasmlar sayt ranglariga moslash uchun iliq tus bilan bo'yaladi */
 .project-cover {
@@ -424,7 +422,6 @@ img { display: block; max-width: 100%; }
   filter: sepia(.35) saturate(.85) contrast(.95);
   transition: transform .4s ease;
 }
-.project:hover .project-cover img { transform: scale(1.05); }
 .project-cover::after {
   content: "";
   position: absolute; inset: 0;
@@ -468,6 +465,7 @@ img { display: block; max-width: 100%; }
   border-radius: 24px;
   padding: 28px;
   display: flex; flex-direction: column; gap: 18px;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 .review-quote { width: 34px; height: 34px; color: var(--accent); }
 .review blockquote { font-size: 16px; line-height: 1.65; color: var(--text); }
@@ -595,6 +593,47 @@ img { display: block; max-width: 100%; }
   padding-top: 40px; padding-bottom: 40px;
   text-align: center;
   font-size: 13px; color: var(--muted);
+}
+
+/* ===== Jonlanish ===== */
+/* Hammasi qisqa va bir martalik. "Animatsiyalarni kamaytirish" yoqilgan bo'lsa ishlamaydi */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(var(--rise, 12px)); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Sahifa ochilganda: belgi, sarlavha, matn va tugmalar ketma-ket chiqadi */
+  .hero-copy > * { animation: rise-in .5s ease-out both; }
+  .hero-copy > :nth-child(2) { animation-delay: .1s; }
+  .hero-copy > :nth-child(3) { animation-delay: .2s; }
+  .hero-copy > :nth-child(4) { animation-delay: .3s; }
+
+  /* Scroll'da paydo bo'lish: JS ".is-visible" qo'shguncha element yashirin turadi.
+     "backwards" — animatsiya tugagach element o'z holatiga qaytadi, hover ishlayveradi */
+  .js .reveal { --rise: 20px; opacity: 0; }
+  .js .reveal.is-visible {
+    opacity: 1;
+    animation: rise-in .5s ease-out var(--d, 0s) backwards;
+  }
+
+  /* Savol-javob: javob yumshoq ochiladi va yopiladi (Chrome/Edge),
+     boshqa brauzerlarda javob yumshoq paydo bo'ladi */
+  :root { interpolate-size: allow-keywords; }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size .25s ease, content-visibility .25s allow-discrete;
+  }
+  .faq-item[open]::details-content { block-size: auto; }
+  .faq-item[open] p { animation: rise-in .25s ease-out; --rise: -4px; }
+}
+
+/* Kartalar sichqoncha kelganda biroz ko'tariladi.
+   Faqat sichqonchali qurilmalarda: telefonda bosilgandan keyin "qotib" qolmasligi uchun */
+@media (hover: hover) {
+  .service:hover, .project:hover, .review:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .project:hover .project-cover img { transform: scale(1.05); }
 }
 
 /* ===== Planshet ===== */

@@ -3,6 +3,8 @@
 // to'g'ri ranglar bilan chiziladi (oq rang miltillab ketmaydi).
 (function () {
   var root = document.documentElement;
+  // JS ishlayotganini CSS'ga bildiramiz: animatsiya uchun elementlar faqat shunda yashiriladi
+  root.classList.add("js");
   var STORAGE_KEY = "theme";
   var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -54,6 +56,26 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") setMenu(false);
     });
+
+    // ===== Scroll qilganda bo'limlar yumshoq paydo bo'lishi =====
+    var items = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(function (el) { el.classList.add("is-visible"); });
+    } else {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target); // faqat bir marta
+        });
+      }, { rootMargin: "0px 0px -8% 0px" });
+      items.forEach(function (el) {
+        // Bir qatordagi kartalar ketma-ket chiqadi (har biri 0,08 s kechikib)
+        var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.setProperty("--d", i * 0.08 + "s");
+        observer.observe(el);
+      });
+    }
 
     // ===== Footerdagi yilni avtomatik yangilash =====
     document.getElementById("year").textContent = new Date().getFullYear();
