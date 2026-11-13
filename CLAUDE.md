@@ -15,6 +15,7 @@ Xizmatlar: biznesni avtomatlashtirish, web saytlar, marketing strategiyasi. Sayt
 
 ## Texnik chegaralar
 - Faqat statik sayt: `index.html`, `style.css` va `script.js`. Build bosqichi ham, framework ham yo'q.
+- `images/` da sayt rasmlaridan tashqari favicon (`favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`) va havola kartasi rasmi (`og-image.jpg`, 1200×630) bor. Havola kartasi matnlari `index.html` dagi `og:` va `twitter:` meta teglarida.
 - Kutubxonalar ishlatilmaydi: na npm paketlari, na jQuery, na Tailwind. Tashqi resurs faqat Google Fonts (Inter).
 - JS faqat kerak bo'lganda yoziladi; hozir unda faqat kun/tun rejimi, telefon menyusi (ochish/yopish), scroll'da paydo bo'lish (`.reveal`) va yil bor.
 - Animatsiyalar yengil va tez (0,2–0,6 s), `prefers-reduced-motion` yoqilganda o'chadi.

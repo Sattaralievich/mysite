@@ -61,7 +61,12 @@
 
 /* ===== Asos ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* iPhone'ni yon tomonga burganda matn o'zi kattalashib ketmasin */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 /* Harakatni kamaytirishni tanlaganlar uchun silliq scroll o'chadi */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -654,7 +659,8 @@ img { display: block; max-width: 100%; }
   .site-header.is-open .nav-links { display: flex; }
   .nav-links a { padding: 12px 16px; border-radius: 16px; font-size: 16px; }
   .nav-links a:hover { background: var(--accent-soft); }
-  .hero { grid-template-columns: 1fr; gap: 56px; }
+  /* minmax(0, 1fr): uzun so'z ustunni ekrandan kengaytirib yubormasin */
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 56px; }
   .hero-media { justify-self: center; max-width: 420px; }
   .fc-profile { left: -24px; }
   .fc-badge { right: -12px; }
@@ -676,7 +682,10 @@ img { display: block; max-width: 100%; }
   .float-card { font-size: 13px; }
   .stats { margin-top: 48px; }
   .stat { padding: 4px 6px; }
-  .stat-label { font-size: 13px; }
+  .stat-label { font-size: 14px; }
+  /* Asosiy tugma butun kenglikda, havola esa barmoq bilan bosishga qulay */
+  .hero-actions .btn-pill { width: 100%; justify-content: space-between; }
+  .link-arrow { padding: 10px 0; }
   .review { padding: 24px 22px; }
   .faq-item summary { padding: 18px 16px 18px 20px; font-size: 16px; }
   .faq-item p { padding: 0 20px 20px; }
@@ -684,4 +693,13 @@ img { display: block; max-width: 100%; }
   .cta-content { padding: 32px 22px 36px; }
   .cta-actions .btn-pill, .cta-actions .btn-ghost { width: 100%; justify-content: space-between; }
   .cta-actions .btn-ghost { justify-content: center; }
+}
+
+/* ===== Juda tor telefonlar (320–360px) ===== */
+@media (max-width: 360px) {
+  /* Menyu tugmalari pill ichiga sig'ishi uchun oraliqlar ixchamlashadi */
+  .nav-pill { gap: 8px; padding-left: 8px; }
+  .nav-actions { gap: 6px; }
+  .btn-pill--sm { padding-left: 14px; gap: 8px; }
+  .hero h1 { font-size: 34px; letter-spacing: -1px; }
 }
