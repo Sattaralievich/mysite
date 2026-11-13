@@ -36,6 +36,25 @@
       save(next);
     });
 
+    // ===== Telefon menyusi: ochish / yopish =====
+    var header = document.querySelector(".site-header");
+    var menuBtn = document.getElementById("menu-toggle");
+    function setMenu(open) {
+      header.classList.toggle("is-open", open);
+      menuBtn.setAttribute("aria-expanded", open);
+      menuBtn.setAttribute("aria-label", open ? "Menyuni yopish" : "Menyuni ochish");
+    }
+    menuBtn.addEventListener("click", function () {
+      setMenu(!header.classList.contains("is-open"));
+    });
+    // Havola bosilganda yoki Esc tugmasida menyu yopiladi
+    header.querySelectorAll(".nav-links a").forEach(function (link) {
+      link.addEventListener("click", function () { setMenu(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setMenu(false);
+    });
+
     // ===== Footerdagi yilni avtomatik yangilash =====
     document.getElementById("year").textContent = new Date().getFullYear();
   });

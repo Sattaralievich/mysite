@@ -16,7 +16,7 @@ Xizmatlar: biznesni avtomatlashtirish, web saytlar, marketing strategiyasi. Sayt
 ## Texnik chegaralar
 - Faqat statik sayt: `index.html`, `style.css` va `script.js`. Build bosqichi ham, framework ham yo'q.
 - Kutubxonalar ishlatilmaydi: na npm paketlari, na jQuery, na Tailwind. Tashqi resurs faqat Google Fonts (Inter).
-- JS faqat kerak bo'lganda yoziladi; hozir unda faqat kun/tun rejimi va yil bor.
+- JS faqat kerak bo'lganda yoziladi; hozir unda faqat kun/tun rejimi, telefon menyusi (ochish/yopish) va yil bor.
 - Sayt telefonda (375px) yonga siljimasdan to'g'ri ko'rinishi shart.
 - Parol, API kalit, token yoki boshqa maxfiy ma'lumot hech qachon kodga yozilmaydi.
 
