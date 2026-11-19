@@ -1,0 +1,44 @@
+# main'ga har push'da saytni 7day.uz serveriga yuklaydi.
+# Maxfiy qiymatlar (server manzili, kalit) GitHub Secrets'da saqlanadi, kodda emas.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # GitHub'dagi "Run workflow" tugmasi bilan qo'lda ishga tushirish
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Kodni olish
+        uses: actions/checkout@v5
+
+      - name: SSH sozlash
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Saytni serverga yuklash
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          tar -czf - index.html style.css script.js images \
+            | ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "deploy@$HOST"
+
+      - name: Kalitni o'chirish
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
